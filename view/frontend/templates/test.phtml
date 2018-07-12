@@ -1,0 +1,38 @@
+<?php
+/** @var \Magento\Catalog\Model\Product $product */
+        $product = $block->getProduct();
+?>
+
+Manufacturer : <h2 style="color: #ff4c29" id="manufacturer"><?php echo $product->getAttributeText('manufacturer_id'); ?></h2>
+<?php $manufacturer = $product->getAttributeText('manufacturer_id');
+?>
+<script>
+    require(
+        [
+            'jquery',
+        ],
+        function ($) {
+
+            $("#manufacturer").on('click', function () {
+                var id = <?php echo $manufacturer ?>;
+
+                $.ajax({
+                    type: "get",
+                    url: "<?php echo $block->getUrl('manufacturer/index/show') ?>",
+                    data: 'id=' + id,
+                    success: function (data) {
+                        console.log(data);
+                        alert(data);
+                    },
+                    completed: function (data) {
+                        console.log('hihi')
+                    }
+
+                });
+
+            })
+
+        }
+    );
+</script>
+

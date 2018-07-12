@@ -1,0 +1,66 @@
+<h2>Manufacturer Forms</h2>
+
+<form action="<?php echo $block->getUrl('manufacturer/index/add'); ?>" method="post" id="form-validate">
+    Name : <input type="text" id="name" name="name"><br/>
+    Enable : <input type="checkbox" id="enable" name="enable" value="1"/><br>
+    Address : <input type="text" id="address_stress" name="address"><br/>
+    City : <input type="text" name="city"><br/>
+    Country :
+    <?php
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $_countryCollectionFactory = $objectManager->get('\Magento\Directory\Model\ResourceModel\Country\CollectionFactory');
+    $_countries = $_countryCollectionFactory->create()->loadByStore()->getData();
+
+    if (count($_countries) > 0): ?>
+        <select name="address_country" id="address_country">
+            <option value="">-- Please Select Choose --</option>
+            <?php foreach ($_countries as $_country): ?>
+                <option value="<?php echo $_country['country_id'] ?>">
+                    <?php echo $_country['country_id'] ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    <?php endif; ?>
+
+
+    Contact name : <input type="text" name="cname"><br/>
+    Contact phone : <input type="number" name="phone"><br/>
+
+    <input type="submit" value="Submit" name="test">
+</form>
+<h2>Infor manufuturer</h2>
+<?php
+$part = $block->getpart();
+?>
+<form >
+    <table width="400" border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Enable</th>
+            <th>City</th>
+            <th>Coutry</th>
+            <th>Address</th>
+            <th>Contact Name</th>
+            <th>Contact Phone</th>
+
+        </tr>
+        <?php
+            foreach ($part as $member){
+        ?>
+              <tr>
+                  <td><?php echo $member->getEntityID() ?></td>
+                  <td><?php echo $member->getName() ?></td>
+                  <td><?php echo $member->getEnable() ?></td>
+                  <td><?php echo $member->getAddressCity() ?></td>
+                  <td><?php echo $member->getAddressCoutry() ?></td>
+                  <td><?php echo $member->getAddressStress() ?></td>
+                  <td><?php echo $member->getContactName() ?></td>
+                  <td><?php echo $member->getContactPhone() ?></td>
+              </tr>
+
+
+
+        <?php } ?>
+    </table>
+</form>
